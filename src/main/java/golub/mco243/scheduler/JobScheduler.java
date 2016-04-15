@@ -31,11 +31,21 @@ public class JobScheduler {
 	}
 
 	public void run() {
+		
+		Job lastJob = null;
+		
 		while (!jobs.isEmpty()) {
 			Collections.sort(jobs, comparator);
 			Job job = jobs.get(0);
 			int actualTimeSlice = executeJob(job);
-			totalTime += actualTimeSlice + OVERHEAD;
+			
+			
+			totalTime += actualTimeSlice;
+			
+			if (job != lastJob){
+				totalTime += OVERHEAD;
+				lastJob = job;
+			}
 		}
 	
 	}
