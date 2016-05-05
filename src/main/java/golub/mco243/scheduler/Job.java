@@ -1,32 +1,30 @@
 package golub.mco243.scheduler;
 
-public class Job {
-	
-	private String name;
-	
+public class Job implements Comparable {
+
 	private Priority priority;
 	private Priority dynamicPriority;
-	
-	private JobState state;
 	private int timeLeftToRun;
-	
-	private JobType jobType;
-	
-	private long lastRanAtTime;
-	
-	public Job (String name, Priority priority, JobType type, int timeLeftToRun){
-		this.name = name;
+	private Long lastRanAtTime;
+	private String name;
+	private Long deadLine;
+	private JobType type;
+	private JobState state;
+
+	public Job(String name, Priority priority, JobType type, int timeLeftToRun, Long deadLine) {
 		this.priority = priority;
-		this.jobType = type;
-		this.timeLeftToRun = timeLeftToRun;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
 		this.name = name;
+		this.timeLeftToRun = timeLeftToRun;
+		this.type = type;
+		this.deadLine = deadLine;
+	}
+
+	public Long getDeadLine() {
+		return deadLine;
+	}
+
+	public void setDeadLine(Long deadLine) {
+		this.deadLine = deadLine;
 	}
 
 	public Priority getPriority() {
@@ -45,12 +43,28 @@ public class Job {
 		this.dynamicPriority = dynamicPriority;
 	}
 
-	public JobType getJobType() {
-		return jobType;
+	public int getTimeLeftToRun() {
+		return timeLeftToRun;
 	}
 
-	public void setJobType(JobType jobType) {
-		this.jobType = jobType;
+	public void setTimeLeftToRun(int timeLeftToRun) {
+		this.timeLeftToRun = timeLeftToRun;
+	}
+
+	public Long getLastRanAtTime() {
+		return lastRanAtTime;
+	}
+
+	public void setLastRanAtTime(Long lastRanAtTime) {
+		this.lastRanAtTime = lastRanAtTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public JobState getState() {
@@ -61,29 +75,25 @@ public class Job {
 		this.state = state;
 	}
 
-	public int getTimeLeftToRun() {
-		return timeLeftToRun;
+	public JobType getType() {
+		return type;
 	}
 
-	public void setTimeLeftToRun(int timeLeftToRun) {
-		this.timeLeftToRun = timeLeftToRun;
+	public void setType(JobType type) {
+		this.type = type;
 	}
 
-	public long getLastRanAtTime() {
-		return lastRanAtTime;
-	}
-
-	public void setLastRanAtTime(long lastRanAtTime) {
-		this.lastRanAtTime = lastRanAtTime;
-	}
-	
-	public void decrementTimeLeftToRun(int time){
+	public void decrementTimeToLeftRun(int time) {
 		timeLeftToRun -= time;
 	}
-	
-	public boolean isFinished(){
-		return timeLeftToRun >= 0;
+
+	public boolean isFinished() {
+		return timeLeftToRun <= 0;
 	}
-	
-	
+
+	@Override
+	public int compareTo(Object arg0) {
+		return 0;
+	}
+
 }

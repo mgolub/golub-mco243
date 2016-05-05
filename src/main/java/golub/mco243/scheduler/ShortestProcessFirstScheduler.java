@@ -5,22 +5,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
-/**
- * Comparators RoundRobin SelfishRoundRobin ShortestProcessFirst 345, 346, 348,
- *
- * deadline scheduler - modify job class realtime scheduling (priority can be
- * REALTime (highest)
- * 
- * @author Hindy
- *
- */
-public class JobScheduler extends Scheduler {
+public class ShortestProcessFirstScheduler extends Scheduler {
 
 	private Comparator<Job> comparator;
 
-	public JobScheduler(List<Job> jobs, Comparator<Job> comparator) {
+	public ShortestProcessFirstScheduler(List<Job> jobs, Comparator<Job> comparator) {
 		super(jobs);
 		this.comparator = comparator;
 	}
@@ -40,7 +30,6 @@ public class JobScheduler extends Scheduler {
 				lastJob = job;
 			}
 		}
-
 	}
 
 	public static void main(String[] args) {
@@ -54,7 +43,8 @@ public class JobScheduler extends Scheduler {
 				new Job("9", Priority.High, JobType.Computation, 700, 6L),
 				new Job("10", Priority.Low, JobType.IO, 200, 3L));
 
-		JobScheduler scheduler = new JobScheduler(new ArrayList<Job>(jobs), new PriorityJobComparator());
+		ShortestProcessFirstScheduler scheduler = new ShortestProcessFirstScheduler(new ArrayList<Job>(jobs),
+				new TimeLeftToRunComparator());
 
 		scheduler.run();
 
